@@ -110,6 +110,13 @@
     <Compile Include="..\sources\gxpengine\Utils\Utils.cs">
       <Link>gxpengine\Utils\Utils.cs</Link>
     </Compile>
+    <Compile Include="Components\Arrow.cs" />
+    <Compile Include="Components\Ball.cs" />
+    <Compile Include="Components\DragHandler.cs" />
+    <Compile Include="Components\LineSegment.cs" />
+    <Compile Include="Components\NLineSegment.cs" />
+    <Compile Include="Components\SpaceShip.cs" />
+    <Compile Include="Components\TextField.cs" />
     <Compile Include="LevelController.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="Prototype.cs" />

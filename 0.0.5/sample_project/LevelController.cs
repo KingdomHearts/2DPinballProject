@@ -9,7 +9,8 @@ namespace GXPEngine
     {
         public LevelController()
         {
-
+            Prototype p = new Prototype();
+            AddChild(p);
         }
 
         public void LevelState(/*enum of andere mogelijk om level te bepalen*/)

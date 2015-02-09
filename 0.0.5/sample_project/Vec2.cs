@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GXPEngine
 {
-    class Vec2
+    public class Vec2
     {
         public static Vec2 zero { get { return new Vec2(0, 0); } }
         public static Vec2 temp = new Vec2();
