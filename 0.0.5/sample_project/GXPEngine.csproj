@@ -110,7 +110,9 @@
     <Compile Include="..\sources\gxpengine\Utils\Utils.cs">
       <Link>gxpengine\Utils\Utils.cs</Link>
     </Compile>
+    <Compile Include="LevelController.cs" />
     <Compile Include="MyGame.cs" />
+    <Compile Include="Prototype.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
