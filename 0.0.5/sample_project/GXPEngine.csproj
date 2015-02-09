@@ -32,17 +32,11 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="..\source\GXPEngine\" />
-    <Folder Include="..\source\GXPEngine\OpenGL\" />
-    <Folder Include="..\source\GXPEngine\Core\" />
-    <Folder Include="..\source\GXPEngine\Utils\" />
-    <Folder Include="..\source\GXPEngine\Managers\" />
-    <Folder Include="..\source\GXPEngine\FMOD\" />
-    <Folder Include="gxpengine\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="..\sources\gxpengine\AnimSprite.cs">
       <Link>gxpengine\AnimSprite.cs</Link>
@@ -117,5 +111,7 @@
       <Link>gxpengine\Utils\Utils.cs</Link>
     </Compile>
     <Compile Include="MyGame.cs" />
+    <Compile Include="SoundManager.cs" />
+    <Compile Include="Vec2.cs" />
   </ItemGroup>
 </Project>
