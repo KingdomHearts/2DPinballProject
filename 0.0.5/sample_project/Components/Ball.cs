@@ -5,8 +5,9 @@ namespace GXPEngine
 {
 	public class Ball : Canvas
 	{
-		public Vec2 position;
-		public Vec2 velocity;
+        private Vec2 _position;
+        private Vec2 _velocity;
+        private Vec2 _acceleration = Vec2.zero;
 		public readonly int radius;
 		private Color _ballColor;
 
@@ -31,11 +32,50 @@ namespace GXPEngine
 			);
 		}
 
-		public void Step(bool skipVelocity = false) {
-			if (position == null || velocity == null)
-				return;
+        public Vec2 acceleration
+        {
+            set
+            {
+                _acceleration = value ?? Vec2.zero;
+            }
+            get
+            {
+                return _acceleration;
+            }
+        }
 
-			if (!skipVelocity) position.Add (velocity);
+        public Vec2 velocity
+        {
+            set
+            {
+                _velocity = value ?? Vec2.zero;
+            }
+            get
+            {
+                return _velocity;
+            }
+        }
+
+        public Vec2 position
+        {
+            set
+            {
+                _position = value ?? Vec2.zero;
+            }
+            get
+            {
+                return _position;
+            }
+        }
+
+		public void Step() 
+        {
+            //if (position == null || velocity == null)
+            //    return;
+
+            _velocity.Add(_acceleration);
+            _position.Add(_velocity);
+            //if (!skipVelocity) position.Add (velocity);
 
 			x = position.x;
 			y = position.y;

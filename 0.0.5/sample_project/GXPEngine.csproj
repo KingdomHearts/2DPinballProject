@@ -36,7 +36,41 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="UniLua\ByteString.cs.meta" />
+    <None Include="UniLua\Coder.cs.meta" />
+    <None Include="UniLua\Common.cs.meta" />
+    <None Include="UniLua\Do.cs.meta" />
+    <None Include="UniLua\Dump.cs.meta" />
+    <None Include="UniLua\LLex.cs.meta" />
+    <None Include="UniLua\LuaAPI.cs.meta" />
+    <None Include="UniLua\LuaAuxLib.cs.meta" />
+    <None Include="UniLua\LuaBaseLib.cs.meta" />
+    <None Include="UniLua\LuaBitLib.cs.meta" />
+    <None Include="UniLua\LuaCoroLib.cs.meta" />
+    <None Include="UniLua\LuaDebug.cs.meta" />
+    <None Include="UniLua\LuaDebugLib.cs.meta" />
+    <None Include="UniLua\LuaEncLib.cs.meta" />
+    <None Include="UniLua\LuaFFILib.cs.meta" />
+    <None Include="UniLua\LuaFile.cs.meta" />
+    <None Include="UniLua\LuaFunc.cs.meta" />
+    <None Include="UniLua\LuaIOLib.cs.meta" />
+    <None Include="UniLua\LuaMathLib.cs.meta" />
+    <None Include="UniLua\LuaObject.cs.meta" />
+    <None Include="UniLua\LuaOsLib.cs.meta" />
+    <None Include="UniLua\LuaPkgLib.cs.meta" />
+    <None Include="UniLua\LuaState.cs.meta" />
+    <None Include="UniLua\LuaStrLib.cs.meta" />
+    <None Include="UniLua\LuaTable.cs.meta" />
+    <None Include="UniLua\LuaTableLib.cs.meta" />
+    <None Include="UniLua\OpCodes.cs.meta" />
+    <None Include="UniLua\Parser.cs.meta" />
+    <None Include="UniLua\TagMethod.cs.meta" />
+    <None Include="UniLua\ULDebug.cs.meta" />
+    <None Include="UniLua\Undump.cs.meta" />
+    <None Include="UniLua\Util.cs.meta" />
+    <None Include="UniLua\VM.cs.meta" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\sources\gxpengine\AnimSprite.cs">
       <Link>gxpengine\AnimSprite.cs</Link>
@@ -121,6 +155,41 @@
     <Compile Include="MyGame.cs" />
     <Compile Include="Prototype.cs" />
     <Compile Include="SoundManager.cs" />
+    <Compile Include="UniLua\ByteString.cs" />
+    <Compile Include="UniLua\Coder.cs" />
+    <Compile Include="UniLua\Common.cs" />
+    <Compile Include="UniLua\Do.cs" />
+    <Compile Include="UniLua\Dump.cs" />
+    <Compile Include="UniLua\LinkedList.cs" />
+    <Compile Include="UniLua\LinkedListNode.cs" />
+    <Compile Include="UniLua\LLex.cs" />
+    <Compile Include="UniLua\LuaAPI.cs" />
+    <Compile Include="UniLua\LuaAuxLib.cs" />
+    <Compile Include="UniLua\LuaBaseLib.cs" />
+    <Compile Include="UniLua\LuaBitLib.cs" />
+    <Compile Include="UniLua\LuaCoroLib.cs" />
+    <Compile Include="UniLua\LuaDebug.cs" />
+    <Compile Include="UniLua\LuaDebugLib.cs" />
+    <Compile Include="UniLua\LuaEncLib.cs" />
+    <Compile Include="UniLua\LuaFFILib.cs" />
+    <Compile Include="UniLua\LuaFile.cs" />
+    <Compile Include="UniLua\LuaFunc.cs" />
+    <Compile Include="UniLua\LuaIOLib.cs" />
+    <Compile Include="UniLua\LuaMathLib.cs" />
+    <Compile Include="UniLua\LuaObject.cs" />
+    <Compile Include="UniLua\LuaOsLib.cs" />
+    <Compile Include="UniLua\LuaPkgLib.cs" />
+    <Compile Include="UniLua\LuaState.cs" />
+    <Compile Include="UniLua\LuaStrLib.cs" />
+    <Compile Include="UniLua\LuaTable.cs" />
+    <Compile Include="UniLua\LuaTableLib.cs" />
+    <Compile Include="UniLua\OpCodes.cs" />
+    <Compile Include="UniLua\Parser.cs" />
+    <Compile Include="UniLua\TagMethod.cs" />
+    <Compile Include="UniLua\ULDebug.cs" />
+    <Compile Include="UniLua\Undump.cs" />
+    <Compile Include="UniLua\Util.cs" />
+    <Compile Include="UniLua\VM.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
 </Project>
