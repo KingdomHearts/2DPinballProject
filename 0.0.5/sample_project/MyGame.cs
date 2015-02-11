@@ -6,14 +6,15 @@ using UniLua;
 
 public class MyGame : Game
 {
+    LevelController LC;
 	public MyGame () : base(960, 540, false, true)
 	{
-        LevelController LC = new LevelController();
-        AddChild(LC);
+        LC = new LevelController(game.width,game.height);
         //HHIIIEIEIEIHEIEHIEHEOIHFL:DAHFL:SDHF:LSDKHF:LH
 	}
 
 	void Update () {
+        AddChild(LC);
 	}
 
 	static void Main() {
