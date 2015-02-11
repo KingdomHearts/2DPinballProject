@@ -35,11 +35,13 @@ namespace GXPEngine
         private MouseHandler _ballHandlerP2 = null;
 
         private float _ballDownTime = 0;
-        private Vec2 _ballDownPosition = null;
+        private Vec2 _ballDownPositionP1 = null;
+        private Vec2 _ballDownPositionP2 = null;
 
         private Vec2 _gravity = new Vec2(0, 0.002f);
         private bool gravityP1 = false;
         private bool gravityP2 = false;
+        private float _speed = 0;
 
         private List<NLineSegment> _paddles;
 
@@ -91,15 +93,15 @@ namespace GXPEngine
             Paddles(new Vec2((width / 2) + ((width / 2) / 2) + 20, height - 50), new Vec2((width / 2) + ((width / 2) / 2) + 60, height - 78), 0xff00ffff);
 
             //2 lines laser
-            AddLine(new Vec2((width / 2) + ((width / 2) / 2) - 30, height - 50), new Vec2((width / 2) + ((width / 2) / 2) - 30 ,height));
-            AddLine(new Vec2((width / 2) + ((width / 2) / 2) + 20, height - 50), new Vec2((width / 2) + ((width / 2) / 2) + 20, height ));
+            AddLine(new Vec2((width / 2) + ((width / 2) / 2) - 30, height - 50), new Vec2((width / 2) + ((width / 2) / 2) - 30, height));
+            AddLine(new Vec2((width / 2) + ((width / 2) / 2) + 20, height - 50), new Vec2((width / 2) + ((width / 2) / 2) + 20, height));
 
             //shoot lines
             AddLine(new Vec2(width - 50, height), new Vec2(width - 50, height - 200));
             AddLine(new Vec2(width, height - 200), new Vec2(width - 20, 250));
 
             // Overall lines
-            AddLine(new Vec2(0 + 20, height - 290), new Vec2( width / 2, 0));
+            AddLine(new Vec2(0 + 20, height - 290), new Vec2(width / 2, 0));
             AddLine(new Vec2(width - 20, height - 290), new Vec2(width / 2, 0));
 
             _lineBalls = new List<Ball>();
@@ -109,9 +111,8 @@ namespace GXPEngine
             _ballP2 = new Ball(10, new Vec2(width - (10 * 2), height - (10 * 10)), null, Color.Blue);
             AddChild(_ballP2);
 
-            //_ballP1.velocity = new Vec2(5, 5);
-            //_ballP2.velocity = new Vec2(5, 5);
 
+            //_ballP1.velocity = new Vec2(5, 5);
 
             _ballHandlerP1 = new MouseHandler(_ballP1);
             _ballHandlerP1.OnMouseDownOnTarget += onBallMouseDownP1;
@@ -132,8 +133,13 @@ namespace GXPEngine
         {
             foreach (NLineSegment line in _paddles)
             {
-                line.start.RotateDegrees(45);
+                for (int i = 0; i < 45; i++)
+                {
+                    line.start.RotateDegrees(i);
+                }
+
             }
+
         }
 
         private void AddLine(Vec2 start, Vec2 end, uint color = 0xff00ff00)
@@ -152,6 +158,7 @@ namespace GXPEngine
             }
             if (Input.GetMouseButton(1))
             {
+
                 _ballP2.position.Set(Input.mouseX, Input.mouseY);
             }
 
@@ -160,9 +167,8 @@ namespace GXPEngine
                 PaddleBehavoir();
             }
 
-            game.targetFps = Input.GetMouseButton(0) ? 10000 : 60;
 
-            _ballP1.Step(); 
+            _ballP1.Step();
             _ballP2.Step();
 
             for (int i = 0; i < _lines.Count; i++)
@@ -177,10 +183,7 @@ namespace GXPEngine
             //draw line
             //_canvas.graphics.DrawLine(
             //    Pens.White, _previousPosition.x, _previousPosition.y, _ball.position.x, _ball.position.y
-            //);
-
-            _previousPosition = _ballP1.position.Clone();
-            _previousPosition = _ballP2.position.Clone();
+            //)
 
             _ballP1.y = _ballP1.position.y;
             _ballP1.x = _ballP1.position.x;
@@ -229,8 +232,9 @@ namespace GXPEngine
             {
                 _ballP2.acceleration.Add(_gravity.Clone());
             }
-           // Console.WriteLine(_ballP1.velocity.y);
-            
+
+            Console.WriteLine(_ballP1.velocity.y);
+
         }
 
         void lineCollision(NLineSegment line, Ball _ball)
@@ -249,7 +253,7 @@ namespace GXPEngine
             Vec2 difference = _ball.position.Clone().Sub(project);
 
             if (alongLine >= 0 && alongLine <= lineLength)
-            {   
+            {
                 if (difference.Length() < _ball.radius)
                 {
                     difference = new Vec2(difference.x, difference.y).Normalize().Scale(_ball.radius);
@@ -290,24 +294,24 @@ namespace GXPEngine
             _ballHandlerP1.OnMouseUp += onBallMouseUpP1;
 
             _ballDownTime = Time.now;
-            _ballDownPosition = _ballP1.position.Clone();
+            _ballDownPositionP1 = _ballP1.position.Clone();
         }
 
         private void onBallMouseMoveP1(GameObject target, MouseEventType type)
         {
-            Vec2 MousePosition = new Vec2(Input.mouseX, Input.mouseY);
-            Vec2 delta = MousePosition.Clone().Sub(_ballDownPosition);
+            Vec2 MousePosition1 = new Vec2(Input.mouseX, Input.mouseY);
+            Vec2 delta = MousePosition1.Clone().Sub(_ballDownPositionP1);
             Vec2 deltaClone = delta.Clone();
             deltaClone.Normalize().Scale((float)Math.Sqrt((double)delta.Length())).Scale(8);
 
         }
         private void onBallMouseUpP1(GameObject target, MouseEventType type)
         {
-            if(target is Ball) targetBall = (Ball)target;
+            if (target is Ball) targetBall = (Ball)target;
             Console.WriteLine(target + "mouse up, time taken:" + (Time.now - _ballDownTime));
             _ballHandlerP1.OnMouseUp -= onBallMouseUpP1;
             _ballHandlerP1.OnMouseMove -= onBallMouseMoveP1;
-            _ballP1.velocity = _ballDownPosition.Sub(_ballP1.position).Scale(1 / 10.0f);
+            _ballP1.velocity = _ballDownPositionP1.Sub(_ballP1.position).Scale(1 / 10.0f);
             gravityP1 = true;
         }
 
@@ -318,13 +322,13 @@ namespace GXPEngine
             _ballHandlerP2.OnMouseUp += onBallMouseUpP2;
 
             _ballDownTime = Time.now;
-            _ballDownPosition = _ballP2.position.Clone();
+            _ballDownPositionP2 = _ballP2.position.Clone();
         }
 
         private void onBallMouseMoveP2(GameObject target, MouseEventType type)
         {
-            Vec2 MousePosition = new Vec2(Input.mouseX, Input.mouseY);
-            Vec2 delta = MousePosition.Clone().Sub(_ballDownPosition);
+            Vec2 MousePosition2 = new Vec2(Input.mouseX, Input.mouseY);
+            Vec2 delta = MousePosition2.Clone().Sub(_ballDownPositionP2);
             Vec2 deltaClone = delta.Clone();
             deltaClone.Normalize().Scale((float)Math.Sqrt((double)delta.Length())).Scale(8);
 
@@ -335,7 +339,7 @@ namespace GXPEngine
             Console.WriteLine(target + "mouse up, time taken:" + (Time.now - _ballDownTime));
             _ballHandlerP2.OnMouseUp -= onBallMouseUpP2;
             _ballHandlerP2.OnMouseMove -= onBallMouseMoveP2;
-            _ballP2.velocity = _ballDownPosition.Sub(_ballP2.position).Scale(1 / 10.0f);
+            _ballP2.velocity = _ballDownPositionP2.Sub(_ballP2.position).Scale(1 / 10.0f);
         }
     }
 }
