@@ -8,7 +8,9 @@ namespace GXPEngine
 	/// Implements a line with normal representation
 	/// </summary>
 	public class NLineSegment : LineSegment
-	{
+    {
+        private float rotateL = 0;
+        private float rotateR = 0;
 		private Arrow _normal;
 	
 		public NLineSegment (float pStartX, float pStartY, float pEndX, float pEndY, uint pColor = 0xffffffff, uint pLineWidth = 1, bool pGlobalCoords = false)
@@ -38,6 +40,68 @@ namespace GXPEngine
 			_normal.vector = end.Clone ().Sub (start).Normal ();
 		}
 
+        public float Rotate(float direction)
+        {
+
+            if (direction < 0)
+            {
+                rotateL = rotateL + direction;
+
+                if (rotateL < -1)
+                {
+                    rotateL = -1;
+                    return -1;
+                }
+            }
+            else
+            {
+                rotateR = rotateR + direction;
+
+                if (rotateR > 1)
+                {
+                    rotateR = 1;
+                    return 1;
+                }
+            }
+            
+
+            this.start.Sub(this.end);
+            this.start.RotateDegrees(direction * 90);
+            this.start.Add(this.end);
+
+            return direction * 90;
+        }
+
+        public void RotateBack(float direction)
+        {
+
+            if (rotateL < 0)
+            {
+                rotateL = rotateL + direction;
+                if (rotateL > 0)
+                {
+                    rotateL = 0;
+                    return;
+                }
+
+                this.start.Sub(this.end);
+                this.start.RotateDegrees(direction * 90);
+                this.start.Add(this.end);
+            }
+            else if (rotateR > 0)
+            {
+                rotateR = rotateR + direction;
+                if (rotateR < 0)
+                {
+                    rotateR = 0;
+                    return;
+                }
+
+                this.start.Sub(this.end);
+                this.start.RotateDegrees(direction * 90);
+                this.start.Add(this.end);
+            }
+        }
 	}
 }
 

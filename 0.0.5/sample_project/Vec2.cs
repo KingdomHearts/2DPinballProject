@@ -84,7 +84,13 @@ namespace GXPEngine
             return this.x * other.x + this.y * other.y;
         }
 
-        public Vec2 Reflect(Vec2 normal, float bounciness = 1)
+        public Vec2 SetLength(float length)
+        {
+            Vec2 result = new Vec2(x, y).Normalize().Scale(length);
+            return result;
+        }
+
+        public Vec2 Reflect(Vec2 normal, float bounciness = 0.5f)
         {
             Vec2 Result = this.Sub(normal.Clone().Scale((1 + bounciness) * this.Dot(normal)));
             return Result;

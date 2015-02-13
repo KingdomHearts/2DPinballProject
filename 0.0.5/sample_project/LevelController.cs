@@ -18,14 +18,14 @@ namespace GXPEngine
         List<NLineSegment> squares;
         List<List<NLineSegment>> squareList;
 
-        List<NLineSegment> triangle;
-        List<List<NLineSegment>> triangleList;
+        List<Triangle> triangleL;
+        //List<List<NLineSegment>> triangleList;
 
         int timer = 0;
 
         public LevelController(int gWidth, int gHeigh) : base(gWidth,gHeigh)
         {
-            
+
             Prototype p = new Prototype();
             AddChild(p);
         }
@@ -47,17 +47,17 @@ namespace GXPEngine
             int point3Y = lua.ToInteger(6);
             string sbounciness = lua.ToString(7);
             float bounciness = (float)Convert.ToDecimal(sbounciness);
+            string bounceline1 = lua.ToString(8);
+            string bounceline2 = lua.ToString(9);
+            string bounceline3 = lua.ToString(10);
+            List<string> bouncelines = new List<string>();
+            if (bounceline1 != null) { bouncelines.Add(bounceline1); };
+            if (bounceline2 != null) { bouncelines.Add(bounceline2); };
+            if (bounceline3 != null) { bouncelines.Add(bounceline3); };
 
-            NLineSegment point12 = new NLineSegment(new Vec2(point1X, point1Y), new Vec2(point2X, point2Y));
-            NLineSegment point13 = new NLineSegment(new Vec2(point1X, point1Y), new Vec2(point3X, point3Y));
-            NLineSegment point23 = new NLineSegment(new Vec2(point2X, point2Y), new Vec2(point3X, point3Y));
-            AddChild(point12);
-            AddChild(point13);
-            AddChild(point23);
-            triangle.Add(point12);
-            triangle.Add(point13);
-            triangle.Add(point23);
-            triangleList.Add(triangle);
+            Triangle triangle = new Triangle(new Vec2(point1X, point1Y), new Vec2(point2X, point2Y), new Vec2(point3X,point3Y),bounciness, bouncelines);
+            AddChild(triangle);
+            triangleL.Add(triangle);
             return 0;
         }
 
@@ -93,10 +93,46 @@ namespace GXPEngine
                 rightTop = new Vec2(right,top);
                 leftTop= new Vec2(left,top);
             }
-            NLineSegment lineLeftBottomRightBottom = new NLineSegment(leftBottom, rightBottom);
-            NLineSegment lineRightBottomRightTop = new NLineSegment(rightBottom, rightTop);
-            NLineSegment lineRightTopLeftTop = new NLineSegment(rightTop, leftTop);
-            NLineSegment lineLeftTopLeftBottom = new NLineSegment(leftTop, leftBottom);
+            NLineSegment lineLeftBottomRightBottom;
+            NLineSegment lineRightBottomRightTop;
+            NLineSegment lineRightTopLeftTop;
+            NLineSegment lineLeftTopLeftBottom;
+            if (rotation == 45 || rotation == 90)
+            {
+                lineLeftBottomRightBottom = new NLineSegment(leftBottom, rightBottom, 0xff00ff00);
+            }
+            else
+            {
+                lineLeftBottomRightBottom = new NLineSegment(leftBottom, rightBottom);
+            }
+
+            if (rotation == 135 || rotation == 180)
+            {
+                lineRightBottomRightTop = new NLineSegment(rightBottom, rightTop, 0xff00ff00);
+            }
+            else
+            {
+                lineRightBottomRightTop = new NLineSegment(rightBottom, rightTop);
+            }
+
+            if (rotation == 225 || rotation == 270)
+            {
+                lineRightTopLeftTop = new NLineSegment(rightTop, leftTop, 0xff00ff00);
+            }
+            else
+            {
+                lineRightTopLeftTop = new NLineSegment(rightTop, leftTop);
+            }
+
+            if (rotation == 315 || rotation == 360)
+            {
+                lineLeftTopLeftBottom = new NLineSegment(leftTop, leftBottom, 0xff00ff00);
+            }
+            else
+            {
+                lineLeftTopLeftBottom = new NLineSegment(leftTop, leftBottom);
+            }
+
             AddChild(lineLeftBottomRightBottom);
             AddChild(lineRightBottomRightTop);
             AddChild(lineRightTopLeftTop);
@@ -155,7 +191,7 @@ namespace GXPEngine
 
             //if (Time.now > (timer + 50))
             //{
-            //    lines = null; circles = null; squares = null; squareList = null; triangle = null; triangleList = null;
+            //    lines = null; circles = null; squares = null; squareList = null; triangleL = null; //triangleList = null;
             //    this.Destroy();
             //}
             //if (Time.now > (timer + 10))
@@ -173,8 +209,8 @@ namespace GXPEngine
             circles = new List<Ball>();
             squares = new List<NLineSegment>();
             squareList = new List<List<NLineSegment>>();
-            triangle = new List<NLineSegment>();
-            triangleList = new List<List<NLineSegment>>();
+            triangleL = new List<Triangle>();
+            //triangleList = new List<List<NLineSegment>>();
 
             levelLines = new List<NLineSegment>();
             //Level lines

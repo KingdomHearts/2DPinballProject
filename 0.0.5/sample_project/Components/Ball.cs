@@ -92,6 +92,11 @@ namespace GXPEngine
 			}
 		}
 
+        public bool OnCollision(GameObject other)
+        {
+            return false;
+        }
+
 	}
 }
 

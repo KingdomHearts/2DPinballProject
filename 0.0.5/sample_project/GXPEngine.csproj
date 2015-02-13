@@ -144,6 +144,8 @@
     <Compile Include="..\sources\gxpengine\Utils\Utils.cs">
       <Link>gxpengine\Utils\Utils.cs</Link>
     </Compile>
+    <Compile Include="BatteryCharge.cs" />
+    <Compile Include="Bumbers.cs" />
     <Compile Include="Components\Arrow.cs" />
     <Compile Include="Components\Ball.cs" />
     <Compile Include="Components\DragHandler.cs" />
@@ -154,7 +156,10 @@
     <Compile Include="LevelController.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="Prototype.cs" />
+    <Compile Include="RepairKit.cs" />
     <Compile Include="SoundManager.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="Triangle.cs" />
     <Compile Include="UniLua\ByteString.cs" />
     <Compile Include="UniLua\Coder.cs" />
     <Compile Include="UniLua\Common.cs" />
