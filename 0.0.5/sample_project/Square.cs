@@ -19,22 +19,23 @@ namespace GXPEngine
         public NLineSegment lineRightTopLeftTop;
         public NLineSegment lineLeftTopLeftBottom;
 
-        public Square(int pRadius, int pPositionX, int pPositionY, int pRotation, float pBounciness)
+        public Vec2 leftBottom;
+        public Vec2 rightBottom;
+        public Vec2 rightTop;
+        public Vec2 leftTop;
+
+        public Square(int pRadius, float pPositionX, float pPositionY, int pRotation, float pBounciness)
         {
             _radius = pRadius;
             _position = new Vec2(pPositionX, pPositionY);
             _rotation = pRotation;
             _bounciness = pBounciness;
 
-            int left = pPositionX + _radius;
-            int right = pPositionX - _radius;
-            int top = pPositionY + _radius;
-            int bottom = pPositionY - _radius;
+            float left = pPositionX + _radius;
+            float right = pPositionX - _radius;
+            float top = pPositionY + _radius;
+            float bottom = pPositionY - _radius;
 
-            Vec2 leftBottom;
-            Vec2 rightBottom;
-            Vec2 rightTop;
-            Vec2 leftTop;
             if (_rotation == 45 || _rotation == 135 || _rotation == 225 || _rotation == 315)
             {
                 leftBottom = new Vec2(left, pPositionY);
