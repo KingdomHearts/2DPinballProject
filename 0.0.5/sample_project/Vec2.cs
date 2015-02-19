@@ -90,7 +90,7 @@ namespace GXPEngine
             return result;
         }
 
-        public Vec2 Reflect(Vec2 normal, float bounciness = 0.5f)
+        public Vec2 Reflect(Vec2 normal, float bounciness = 0.9f)
         {
             Vec2 Result = this.Sub(normal.Clone().Scale((1 + bounciness) * this.Dot(normal)));
             return Result;

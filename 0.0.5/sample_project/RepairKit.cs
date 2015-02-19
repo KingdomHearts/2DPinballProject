@@ -6,15 +6,13 @@ using System.Drawing;
 
 namespace GXPEngine
 {
-    class RepairKit : Canvas
+    class RepairKit : Sprite 
     {
-        private Vec2 _position;
-        public RepairKit(Vec2 pPosition): base(20,20)
+        
+        public RepairKit(): base("repair kit.png")
         {
-            _position = pPosition;
-            x = _position.x;
-            y = _position.y;
-            draw();
+            SetOrigin(width / 2, height / 2);
+            SetScaleXY(0.1f, 0.1f);
         }
 
         public int Score()
@@ -22,13 +20,5 @@ namespace GXPEngine
             return 0;
         }
 
-        private void draw()
-        {
-            graphics.Clear(Color.Empty);
-            graphics.FillEllipse(
-                new SolidBrush(Color.Red),
-                0, 0, 2 * 10, 2 * 10
-            );
-        }
     }
 }
