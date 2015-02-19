@@ -94,6 +94,11 @@ namespace GXPEngine
 
         public bool OnCollision(GameObject other)
         {
+            if (other is Square)
+            {
+                Square square = (Square)other;
+                square.OpenDoor(true);
+            }
             return false;
         }
 

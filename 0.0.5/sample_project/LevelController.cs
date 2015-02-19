@@ -13,7 +13,7 @@ namespace GXPEngine
         ILuaState _lua;
         private List<NLineSegment> _levelLines;
         private List<NLineSegment> _lines;
-        private List<Bumbers> _circles;
+        private List<Bumpers> _circles;
         private List<Square> _squaresL;
         private List<Triangle> _triangleL;
         private int _timer = 0;
@@ -43,24 +43,48 @@ namespace GXPEngine
         private List<NLineSegment> _paddlesP2;
         private const float dir = 0.2f;
         #endregion
-        Prototype p;
-
+        
+        P1LaserMachine _p1Laser;
+        P2LaserMachine _p2Laser;
+        Sprite ball1 = new Sprite ("green ball.png");
+        Sprite ball2 = new Sprite ("blue ball.png");
         public LevelController(int gWidth, int gHeigh) : base(gWidth,gHeigh)
         {
+
+            Sprite Background = new Sprite("achtergrond.png");
+            AddChild(Background);
+           
+            
+
+            Background.scaleX = 0.5f;
+            Background.scaleY = 0.5f;
+          
             //Lists
             _lineCaps = new List<Ball>();
             _paddlesP1 = new List<NLineSegment>();
             _paddlesP2 = new List<NLineSegment>();
 
+
             LuaUpdate();
             _ballP1 = new Ball(10, new Vec2(50, gHeigh - 100), null, Color.Green);
             _ballHandlerP1 = new MouseHandler(_ballP1);
             _ballHandlerP1.OnMouseDownOnTarget += onBallMouseDownP1;
+            _ballP1.AddChild(ball1);
+            ball1.SetOrigin(ball1.width / 2, ball1.height / 2);
+            //_ballP2.AddChild(ball2);
+            //ball1.SetOrigin(ball2.width / 2, ball2.height / 2);
+           
+            
+           
 
             //ChildAdds
             AddChild(_ballP1);
             PaddlesP1(new Vec2(200, 415), new Vec2(275, 415), 0xff00ffff);
+            CreateLaserP1(200, 475);
+            CreateLaserP2(765, 475);
             //PaddlesP2(new Vec2(350, 500), new Vec2(450, 500), 0xff00ffff);
+
+            
         }
 
         #region Paddles
@@ -178,6 +202,23 @@ namespace GXPEngine
         #endregion
 
         #region Lua Add Object
+
+       private void CreateLaserP2(int x, int y)
+        {
+            _p2Laser = new P2LaserMachine();
+            _p2Laser.x = x;
+            _p2Laser.y = y;
+            AddChild(_p2Laser);
+
+        }
+
+       private void CreateLaserP1(int x, int y)
+       {
+           _p1Laser = new P1LaserMachine();
+           _p1Laser.x = x;
+           _p1Laser.y = y;
+           AddChild(_p1Laser);
+       }
         private void AddLineLevel(Vec2 start, Vec2 end, uint color = 0xff00ff00)
         {
             NLineSegment line = new NLineSegment(start, end, color, 4);
@@ -231,8 +272,9 @@ namespace GXPEngine
             int rotation = lua.ToInteger(4);
             string sbounciness = lua.ToString(5);
             float bounciness = (float)Convert.ToDecimal(sbounciness);
+            int closet = lua.ToInteger(6);
 
-            Square sqaure = new Square(radius, positionX * 2, positionY * 2, rotation, bounciness);
+            Square sqaure = new Square(radius, positionX * 2, positionY * 2, rotation, bounciness, closet);
 
             AddLineCaps(sqaure.rightBottom, sqaure.leftBottom);
             AddLineCaps(sqaure.rightBottom, sqaure.rightTop);
@@ -328,7 +370,8 @@ namespace GXPEngine
             float positionY = lua.ToInteger(3);
             string sbounciness = lua.ToString(4);
             float bounciness = (float)Convert.ToDecimal(sbounciness);
-            Bumbers circle = new Bumbers(radius, new Vec2(positionX * 2, positionY * 2));
+            int tower1 = lua.ToInteger(5);
+            Bumpers circle = new Bumpers(radius, new Vec2(positionX * 2.1f, positionY * 2.08f), null,bounciness,tower1);
             AddChild(circle);
             _circles.Add(circle);
             return 0;
@@ -342,8 +385,8 @@ namespace GXPEngine
             float endY = lua.ToInteger(4);
             string sbounciness = lua.ToString(5);
             float bounciness = (float)Convert.ToDecimal(sbounciness);
-            NLineSegment line = new NLineSegment(new Vec2((startX * 2) - 10, (startY * 2) - 10), new Vec2((endX * 2) - 10, (endY * 2) - 10), 0xff00ff00, 4);
-            AddLineCaps(new Vec2((startX * 2) - 10, (startY * 2) - 10), new Vec2((endX * 2) - 10, (endY * 2) - 10));
+            NLineSegment line = new NLineSegment(new Vec2((startX * 2.1f), (startY * 2.1f)), new Vec2((endX * 2.1f), (endY * 2.1f)), 0xff00ff00, 4);
+            AddLineCaps(new Vec2((startX * 2.1f), (startY * 2.1f)), new Vec2((endX * 2.1f), (endY * 2.1f)));
             AddChild(line);
             _lines.Add(line);
             return 0;
@@ -351,20 +394,27 @@ namespace GXPEngine
         #endregion
 
         #region Collisions
-        void BumberCollision(Bumbers bumber)
+        void BumperCollision(Bumpers bumper)
         {
-            Vec2 difference = bumber.position.Clone().Sub(_ballP1.position.Clone());
+            Vec2 difference = bumper.position.Clone().Sub(_ballP1.position.Clone());
             float distance = difference.Length();
 
-            if (distance < (_ballP1.radius + bumber.radius))
+            if (distance < (_ballP1.radius + bumper.radius))
             {
-                float overlap = (_ballP1.radius + bumber.radius) - distance;
+                float overlap = (_ballP1.radius + bumper.radius) - distance;
                 Vec2 normal = difference.Normalize();
                 Vec2 bounce = normal.Clone().Scale(overlap);
 
                 _ballP1.position.Sub(bounce);
-                _ballP1.velocity = bumber.Reflect(_ballP1, normal);
-            }
+                _ballP1.velocity = bumper.Reflect(_ballP1, normal);
+                _ballP1.OnCollision(bumper);
+                        
+                       
+                }
+                else
+                {
+                    bumper.Hit(false);
+                }
             _ballP1.y = _ballP1.position.y;
             _ballP1.x = _ballP1.position.x;
         }
@@ -398,8 +448,14 @@ namespace GXPEngine
                         //Vec2 checkLineEnd = line.end;
                         _ballP1.velocity = square.Reflect(lineNormal, _ballP1);
 
+                        _ballP1.OnCollision(square);
+                        
                         //reflect on normal from line.
                     }
+                }
+                else
+                {
+                    square.OpenDoor(false);
                 }
                 _ballP1.y = _ballP1.position.y;
                 _ballP1.x = _ballP1.position.x;
@@ -562,7 +618,7 @@ namespace GXPEngine
             {
                 _ballP1.position.Set(Input.mouseX, Input.mouseY);
             }
-            _ballP1.Step();
+            _ballP1.Step();;
 
             #region collisions update
             for (int i = 0; i < _lines.Count; i++)
@@ -582,7 +638,7 @@ namespace GXPEngine
             }
             for (int i = 0; i < _circles.Count; i++)
             {
-                BumberCollision(_circles[i]);
+                BumperCollision(_circles[i]);
             } 
             for (int i = 0; i < _paddlesP1.Count; i++)
             {
@@ -626,7 +682,7 @@ namespace GXPEngine
         {
 
             _lines = new List<NLineSegment>();
-            _circles = new List<Bumbers>();
+            _circles = new List<Bumpers>();
             _squaresL = new List<Square>();
             //squareList = new List<List<NLineSegment>>();
             _triangleL = new List<Triangle>();
