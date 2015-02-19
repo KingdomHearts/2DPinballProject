@@ -40,72 +40,7 @@ namespace GXPEngine
 			_normal.vector = end.Clone ().Sub (start).Normal ();
 		}
 
-        public float Movement(float direction)
-        {
 
-            if (direction < 0 || direction > 0)
-            {
-                movementL = movementL + direction;
-
-                if (movementL < -10)
-                {
-                    movementL = -10;
-                    return -10;
-                }
-            }
-            else
-            {
-                movementR = movementR + direction;
-
-                if (movementR > 10)
-                {
-                    movementR = 10;
-                    return 10;
-                }
-            }
-
-
-            this.start.Sub(this.end);
-            this.start.Add(new Vec2(13 * direction, 0));
-            this.start.Add(this.end);
-
-            this.end.Sub(this.start);
-            this.end.Add(new Vec2(13 * direction, 0));
-            this.end.Add(this.start);
-
-            return direction;
-        }
-
-        public void MoveBack(float direction)
-        {
-
-            //if (rotateL < 0)
-            //{
-            //    rotateL = rotateL + direction;
-            //    if (rotateL > 0)
-            //    {
-            //        rotateL = 0;
-            //        return;
-            //    }
-
-            //    this.start.Sub(this.end);
-            //    this.start.RotateDegrees(direction * 90);
-            //    this.start.Add(this.end);
-            //}
-            //else if (rotateR > 0)
-            //{
-            //    rotateR = rotateR + direction;
-            //    if (rotateR < 0)
-            //    {
-            //        rotateR = 0;
-            //        return;
-            //    }
-
-            //    this.start.Sub(this.end);
-            //    this.start.RotateDegrees(direction * 90);
-            //    this.start.Add(this.end);
-            //}
-        }
 	}
 }
 

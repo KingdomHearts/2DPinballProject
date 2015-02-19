@@ -9,7 +9,7 @@ namespace GXPEngine
     public static class SoundManager
     {
         private static Dictionary<SoundEffect, Sound> storeSound = new Dictionary<SoundEffect, Sound>() { 
-            { SoundEffect.bumper, new Sound("bumper.wav", false) },
+            { SoundEffect.BOOM, new Sound("BOOM.mp3") },
             { SoundEffect.JUMP, new Sound("JUMP.mp3") },
             { SoundEffect.SCREAM, new Sound("SCREAM.mp3") } };
 
@@ -26,7 +26,7 @@ namespace GXPEngine
 
         public enum SoundEffect
         {
-            bumper,
+            BOOM,
             JUMP,
             SCREAM
         }

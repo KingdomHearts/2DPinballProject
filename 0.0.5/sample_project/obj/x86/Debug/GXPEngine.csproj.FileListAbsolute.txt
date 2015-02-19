@@ -32,6 +32,5 @@ C:\Users\Elias\Desktop\School - Saxion\Project3\2DPinballProject\0.0.5\sample_pr
 C:\Users\Elias\Desktop\School - Saxion\Project3\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.pdb
 C:\Users\Elias\Desktop\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.exe
 C:\Users\Elias\Desktop\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.pdb
-C:\Users\Elias\Desktop\2DPinballProject\0.0.5\sample_project\bin\Debug\GXPEngine.exe
-C:\Users\Elias\Desktop\2DPinballProject\0.0.5\sample_project\bin\Debug\GXPEngine.pdb
-C:\Users\Elias\Desktop\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
+E:\backup 2D pinball\V4\2D Pinball Program\2DPinballProject\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.exe
+E:\backup 2D pinball\V4\2D Pinball Program\2DPinballProject\2DPinballProject\0.0.5\sample_project\obj\x86\Debug\GXPEngine.pdb

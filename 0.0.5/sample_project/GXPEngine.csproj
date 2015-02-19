@@ -145,7 +145,7 @@
       <Link>gxpengine\Utils\Utils.cs</Link>
     </Compile>
     <Compile Include="BatteryCharge.cs" />
-    <Compile Include="Bumpers.cs" />
+    <Compile Include="Bumbers.cs" />
     <Compile Include="Components\Arrow.cs" />
     <Compile Include="Components\Ball.cs" />
     <Compile Include="Components\DragHandler.cs" />
@@ -153,10 +153,9 @@
     <Compile Include="Components\NLineSegment.cs" />
     <Compile Include="Components\SpaceShip.cs" />
     <Compile Include="Components\TextField.cs" />
+    <Compile Include="Laser.cs" />
     <Compile Include="LevelController.cs" />
     <Compile Include="MyGame.cs" />
-    <Compile Include="P2LaserMachine.cs" />
-    <Compile Include="P1LaserMachine.cs" />
     <Compile Include="Prototype.cs" />
     <Compile Include="RepairKit.cs" />
     <Compile Include="SoundManager.cs" />
