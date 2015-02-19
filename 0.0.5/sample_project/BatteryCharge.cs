@@ -6,15 +6,14 @@ using System.Drawing;
 
 namespace GXPEngine
 {
-    class BatteryCharge : Canvas
+    class BatteryCharge : Sprite
     {
-        private Vec2 _position;
-        public BatteryCharge(Vec2 pPosition): base(20, 20)
+        
+        public BatteryCharge(): base("battery pack.png")
         {
-            _position = pPosition;
-            x = _position.x;
-            y = _position.y;
-            draw();
+            SetOrigin(width / 2, height / 2);
+            SetScaleXY(0.1f, 0.1f);
+            
         }
 
         public int Score()
@@ -22,13 +21,6 @@ namespace GXPEngine
             return 0;
         }
 
-        private void draw()
-        {
-            graphics.Clear(Color.Empty);
-            graphics.FillEllipse(
-                new SolidBrush(Color.Pink),
-                0, 0, 2 * 10, 2 * 10
-            );
         }
     }
-}
+

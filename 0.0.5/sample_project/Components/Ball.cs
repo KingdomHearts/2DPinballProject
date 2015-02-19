@@ -9,12 +9,16 @@ namespace GXPEngine
         private Vec2 _velocity;
         private Vec2 _acceleration = Vec2.zero;
 		public readonly int radius;
-		private Color _ballColor;
+        private Color _ballColor;
+        private float movementL;
+        private float movementR;
+        private float _bounciness;
 
-		public Ball (int pRadius, Vec2 pPosition = null, Vec2 pVelocity = null, Color? pColor = null):base (pRadius*2, pRadius*2)
+		public Ball (int pRadius, Vec2 pPosition = null, Vec2 pVelocity = null, Color? pColor = null, float pBounciness = 0.5f):base (pRadius*2, pRadius*2)
 		{
 			radius = pRadius;
 			SetOrigin (radius, radius);
+            pBounciness = _bounciness;
 
 			position = pPosition ?? Vec2.zero;
 			velocity = pVelocity ?? Vec2.zero;
@@ -92,11 +96,69 @@ namespace GXPEngine
 			}
 		}
 
-        public bool OnCollision(GameObject other)
+        public float Movement(float direction)
         {
-            return false;
+
+            if (direction < 0 || direction > 0)
+            {
+                movementL = movementL + direction;
+
+                if (movementL < -10)
+                {
+                    movementL = -10;
+                    return -10;
+                }
+            }
+            else
+            {
+                movementR = movementR + direction;
+
+                if (movementR > 10)
+                {
+                    movementR = 10;
+                    return 10;
+                }
+            }
+
+            //this.x.Add(new Vec2(13 * direction, 0));
+            this.x = this.x + (13 * direction);
+            return direction;
         }
 
+        public void MoveBack(float direction)
+        {
+
+            //if (rotateL < 0)
+            //{
+            //    rotateL = rotateL + direction;
+            //    if (rotateL > 0)
+            //    {
+            //        rotateL = 0;
+            //        return;
+            //    }
+
+            //    this.start.Sub(this.end);
+            //    this.start.RotateDegrees(direction * 90);
+            //    this.start.Add(this.end);
+            //}
+            //else if (rotateR > 0)
+            //{
+            //    rotateR = rotateR + direction;
+            //    if (rotateR < 0)
+            //    {
+            //        rotateR = 0;
+            //        return;
+            //    }
+
+            //    this.start.Sub(this.end);
+            //    this.start.RotateDegrees(direction * 90);
+            //    this.start.Add(this.end);
+            //}
+        }
+        public Vec2 Reflect(Ball ball, Vec2 normal, float bounciness)
+        {
+            return ball.velocity.Reflect(normal, bounciness);
+        }
 	}
 }
 

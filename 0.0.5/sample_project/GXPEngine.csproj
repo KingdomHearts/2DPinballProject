@@ -153,6 +153,7 @@
     <Compile Include="Components\NLineSegment.cs" />
     <Compile Include="Components\SpaceShip.cs" />
     <Compile Include="Components\TextField.cs" />
+    <Compile Include="Laser.cs" />
     <Compile Include="LevelController.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="Prototype.cs" />

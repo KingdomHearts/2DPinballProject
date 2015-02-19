@@ -9,7 +9,7 @@ namespace GXPEngine
     {
         private int _radius;
         private Vec2 _position;
-        private int _rotation;
+        public int rotation;
         private float _bounciness;
 
         private List<string> _bouncelinesList;
@@ -28,20 +28,25 @@ namespace GXPEngine
         {
             _radius = pRadius;
             _position = new Vec2(pPositionX, pPositionY);
-            _rotation = pRotation;
+            rotation = pRotation;
             _bounciness = pBounciness;
 
-            float left = pPositionX + _radius;
-            float right = pPositionX - _radius;
-            float top = pPositionY + _radius;
-            float bottom = pPositionY - _radius;
+            Rotate(rotation);
+        }
 
-            if (_rotation == 45 || _rotation == 135 || _rotation == 225 || _rotation == 315)
+        public void Rotate(int rotation)
+        {
+            float left = _position.x + _radius;
+            float right = _position.x - _radius;
+            float top = _position.y + _radius;
+            float bottom = _position.y - _radius;
+
+            if (rotation == 45 || rotation == 135 || rotation == 225 || rotation == 315)
             {
-                leftBottom = new Vec2(left, pPositionY);
-                rightBottom = new Vec2(pPositionX, bottom);
-                rightTop = new Vec2(right, pPositionY);
-                leftTop = new Vec2(pPositionX, top);
+                leftBottom = new Vec2(left, _position.y);
+                rightBottom = new Vec2(_position.x, bottom);
+                rightTop = new Vec2(right, _position.y);
+                leftTop = new Vec2(_position.x, top);
             }
             else
             {
@@ -51,7 +56,7 @@ namespace GXPEngine
                 leftTop = new Vec2(left, top);
             }
             #region rotation
-            if (_rotation == 45 || _rotation == 90)
+            if (rotation == 45 || rotation == 90)
             {
                 lineLeftBottomRightBottom = new NLineSegment(leftBottom, rightBottom, 0xff00ff00);
             }
@@ -60,7 +65,7 @@ namespace GXPEngine
                 lineLeftBottomRightBottom = new NLineSegment(leftBottom, rightBottom);
             }
 
-            if (_rotation == 135 || _rotation == 180)
+            if (rotation == 135 || rotation == 180)
             {
                 lineRightBottomRightTop = new NLineSegment(rightBottom, rightTop, 0xff00ff00);
             }
@@ -69,8 +74,15 @@ namespace GXPEngine
                 lineRightBottomRightTop = new NLineSegment(rightBottom, rightTop);
             }
 
-            if (_rotation == 225 || _rotation == 270)
+            if (rotation == 225 || rotation == 270)
             {
+                if (rotation == 225)
+                {
+                    LineSegment line = new LineSegment(new Vec2(left, top), new Vec2(right, bottom));
+                    //LineSegment line1 = new LineSegment(new Vec2(left, bottom), new Vec2(right, top));
+                    AddChild(line);
+                    //AddChild(line1);
+                }
                 lineRightTopLeftTop = new NLineSegment(rightTop, leftTop, 0xff00ff00);
             }
             else
@@ -78,8 +90,13 @@ namespace GXPEngine
                 lineRightTopLeftTop = new NLineSegment(rightTop, leftTop);
             }
 
-            if (_rotation == 315 || _rotation == 360)
+            if (rotation == 315 || rotation == 360)
             {
+                if (rotation == 315)
+                {
+                    LineSegment line = new LineSegment(new Vec2(left, bottom), new Vec2(right, top));
+                    AddChild(line);
+                }
                 lineLeftTopLeftBottom = new NLineSegment(leftTop, leftBottom, 0xff00ff00);
             }
             else
@@ -92,6 +109,7 @@ namespace GXPEngine
             AddChild(lineRightBottomRightTop);
             AddChild(lineRightTopLeftTop);
             AddChild(lineLeftTopLeftBottom);
+
         }
 
         public Vec2 Reflect(Vec2 normal, Ball ball)
@@ -102,5 +120,13 @@ namespace GXPEngine
         {
             return null; 
         }
+
+        //public void MirrorCollision(Ball ball)
+        //{
+        //    if (ball.HitTest()
+        //    {
+                
+        //    }
+        //}
     }
 }
